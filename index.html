@@ -76,9 +76,17 @@
                 const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
+                // Format release time based on the user's time zone
+                const releaseTimeLocal = new Date(releaseTimeCET).toLocaleString(undefined, {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    timeZoneName: 'short'
+                });
+
                 // Display the countdown
                 document.getElementById('countdown').textContent = 
-                    `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+                    `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds (Releases at ${releaseTimeLocal})`;
             } else {
                 // If the countdown is over
                 document.getElementById('countdown').textContent = 'GO FUCKING DOWNLOAD THE GAME BRO 🗣️🗣️🔥🔥🔥🔥🔥';
