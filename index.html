@@ -60,24 +60,18 @@
 
     <script>
         function updateCountdown() {
-            // Release time in CET (1:00 AM on 19th January 2025)
             const releaseTimeCET = new Date('2025-01-18T00:00:00Z'); // CET is UTC+1, so 1:00 AM CET = 00:00 UTC
             const releaseTimeCST = new Date('2025-01-17T23:00:00Z'); // CST is UTC-6, so 6:00 PM CST = 23:00 UTC
 
-            // Current time
             const now = new Date();
-
-            // Calculate the time difference
             const timeDifference = releaseTimeCET - now;
 
             if (timeDifference > 0) {
-                // Calculate days, hours, minutes, and seconds
                 const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-                // Format release time based on the user's time zone
                 const releaseTimeLocal = new Date(releaseTimeCET).toLocaleString(undefined, {
                     hour: '2-digit',
                     minute: '2-digit',
@@ -85,11 +79,9 @@
                     timeZoneName: 'short'
                 });
 
-                // Display the countdown
                 document.getElementById('countdown').textContent = 
                     `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds (Releases at ${releaseTimeLocal})`;
             } else {
-                // If the countdown is over
                 document.getElementById('countdown').textContent = 'GO DOWNLOAD THE GAME NOW! 🗣️🔥🔥🔥';
             }
         }
@@ -101,17 +93,11 @@
             document.getElementById('clock').textContent = timeString;
         }
 
-        // Update the countdown every second
         setInterval(updateCountdown, 1000);
-
-        // Update the clock every second
         setInterval(updateClock, 1000);
-
-        // Initial call
         updateCountdown();
         updateClock();
 
-        // Make the image hit the corners
         const image = document.getElementById('moving-image');
         let posX = 0;
         let posY = 0;
@@ -143,6 +129,21 @@
 
         image.style.position = 'absolute';
         moveImage();
+
+        // Toggle image visibility with "L" key press
+        let isImageVisible = true;
+
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'L' || event.key === 'l') {
+                isImageVisible = !isImageVisible;
+
+                if (isImageVisible) {
+                    image.style.display = 'block';
+                } else {
+                    image.style.display = 'none';
+                }
+            }
+        });
     </script>
 </body>
 </html>
