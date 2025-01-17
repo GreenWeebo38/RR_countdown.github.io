@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Rewind v6.1 - Now Available!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #282c34;
+            color: white;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        p {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        audio {
+            display: block;
+            margin: 0 auto;
+        }
+        #popup {
+            display: none;
+            position: fixed;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #popup a {
+            color: #61dafb;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: 2px solid #61dafb;
+            border-radius: 5px;
+        }
+        #popup a:hover {
+            background-color: #61dafb;
+            color: black;
+        }
+        #popup-small {
+            display: none;
+            position: fixed;
+            bottom: 15%; /* Positioned below the first popup */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Retro Rewind v6.1 - Now Available!</h1>
+    <p>Enjoy this retro tune while you download the game!</p>
+    <audio controls autoplay>
+        <source src="1329175001303224453.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+    <div id="popup">
+        <p>Just kidding, here's a download button!</p>
+        <a href="https://wiki.tockdom.com/wiki/Retro_Rewind" target="_blank">Go to Retro Rewind</a>
+    </div>
+    <div id="popup-small">
+        <p>Also, GalDen is a French Femboy! REEEEEAAAAL 🗣️🔥</p>
+    </div>
+
+    <script>
+        // Display the main popup after 5 seconds of audio playback
+        setTimeout(() => {
+            document.getElementById('popup').style.display = 'block';
+        }, 5000); // 5 seconds delay
+
+        // Display the small popup 2 seconds after the main popup
+        setTimeout(() => {
+            document.getElementById('popup-small').style.display = 'block';
+        }, 15000); // 7 seconds total delay
+    </script>
+</body>
+</html>

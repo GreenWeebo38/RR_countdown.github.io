@@ -59,67 +59,51 @@
     <div id="clock">Loading time...</div>
 
     <script>
-        function updateCountdown() {
-            const releaseTimeCET = new Date('2025-01-18T00:00:00Z'); // CET is UTC+1, so 1:00 AM CET = 00:00 UTC
-            const releaseTimeCST = new Date('2025-01-17T23:00:00Z'); // CST is UTC-6, so 6:00 PM CST = 23:00 UTC
+        const image = document.getElementById('moving-image');
+        const countdownElem = document.getElementById('countdown');
+        const clockElem = document.getElementById('clock');
 
+        const releaseTimeCET = new Date('2025-01-18T00:00:00Z');
+        const releaseTimeLocalStr = new Date(releaseTimeCET).toLocaleString(undefined, {
+            hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short'
+        });
+
+        let posX = 0, posY = 0, directionX = 1, directionY = 1;
+        const speed = 2, imageWidth = image.offsetWidth, imageHeight = image.offsetHeight;
+        let isImageVisible = true;
+
+        // Countdown and Clock Update Function
+        function updateTime() {
             const now = new Date();
             const timeDifference = releaseTimeCET - now;
-
+            
             if (timeDifference > 0) {
                 const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-                const releaseTimeLocal = new Date(releaseTimeCET).toLocaleString(undefined, {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    timeZoneName: 'short'
-                });
-
-                document.getElementById('countdown').textContent = 
-                    `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds (Releases at ${releaseTimeLocal})`;
+                countdownElem.textContent = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds (Releases at ${releaseTimeLocalStr})`;
             } else {
-                document.getElementById('countdown').textContent = 'GO DOWNLOAD THE GAME NOW! 🗣️🔥🔥🔥';
+                // Redirect to sound page when countdown ends
+                window.location.href = 'sound.html';
             }
+
+            const timeString = now.toLocaleTimeString(undefined, {
+                hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short'
+            });
+            clockElem.textContent = timeString;
         }
 
-        function updateClock() {
-            const now = new Date();
-            const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
-            const timeString = now.toLocaleTimeString(undefined, options);
-            document.getElementById('clock').textContent = timeString;
-        }
-
-        setInterval(updateCountdown, 1000);
-        setInterval(updateClock, 1000);
-        updateCountdown();
-        updateClock();
-
-        const image = document.getElementById('moving-image');
-        let posX = 0;
-        let posY = 0;
-        let directionX = 1;
-        let directionY = 1;
-        const speed = 2;
-
+        // Image Movement Function
         function moveImage() {
-            const screenWidth = window.innerWidth;
-            const screenHeight = window.innerHeight;
-            const imageWidth = image.offsetWidth;
-            const imageHeight = image.offsetHeight;
+            const screenWidth = window.innerWidth, screenHeight = window.innerHeight;
 
             posX += directionX * speed;
             posY += directionY * speed;
 
-            if (posX + imageWidth >= screenWidth || posX <= 0) {
-                directionX *= -1;
-            }
-            if (posY + imageHeight >= screenHeight || posY <= 0) {
-                directionY *= -1;
-            }
+            if (posX + imageWidth >= screenWidth || posX <= 0) directionX *= -1;
+            if (posY + imageHeight >= screenHeight || posY <= 0) directionY *= -1;
 
             image.style.left = `${posX}px`;
             image.style.top = `${posY}px`;
@@ -127,23 +111,17 @@
             requestAnimationFrame(moveImage);
         }
 
-        image.style.position = 'absolute';
-        moveImage();
-
-        // Toggle image visibility with "L" key press
-        let isImageVisible = true;
-
+        // Toggle Image Visibility
         window.addEventListener('keydown', (event) => {
-            if (event.key === 'L' || event.key === 'l') {
+            if (event.key.toLowerCase() === 'l') {
                 isImageVisible = !isImageVisible;
-
-                if (isImageVisible) {
-                    image.style.display = 'block';
-                } else {
-                    image.style.display = 'none';
-                }
+                image.style.display = isImageVisible ? 'block' : 'none';
             }
         });
+
+        // Start animations and updates
+        setInterval(updateTime, 1000);
+        moveImage();
     </script>
 </body>
 </html>
